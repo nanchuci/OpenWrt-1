@@ -63,7 +63,8 @@ platform_do_upgrade() {
 	xiaomi,mir3g|\
 	xiaomi,mir3p|\
 	xiaomi,mi-ac2100|\
-	xiaomi,redmi-ac2100)
+	xiaomi,redmi-ac2100|\
+	zte,e8820s)
 		nand_do_upgrade "$1"
 		;;
 	tplink,c50-v4)
