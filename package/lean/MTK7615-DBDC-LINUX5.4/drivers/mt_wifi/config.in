@@ -1,3 +1,13 @@
+menu "MT_WIFI Configuration"
+	depends on PACKAGE_mt_wifi
+
+config MTK_CHIP_MT7603E_MT7612E
+	bool "MTK_CHIP_MT7603E_MT7612E"
+	default y if PACKAGE_kmod-mt7603e && PACKAGE_kmod-mt76x2e
+	default n
+
+endmenu
+
 if PACKAGE_kmod-mt_wifi
 
 config MTK_SUPPORT_OPENWRT
