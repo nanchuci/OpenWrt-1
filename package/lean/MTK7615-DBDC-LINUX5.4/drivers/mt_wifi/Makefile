@@ -4,8 +4,10 @@
 #
 
 include $(TOPDIR)/rules.mk
+include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=mt_wifi
+P4REV:=8
 PKG_VERSION:=1
 PKG_RELEASE:=1
 
@@ -17,27 +19,28 @@ PKG_CONFIG_DEPENDS := \
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/mt_wifi
-  SECTION:=net
-  CATEGORY:=Network
-  TITLE:=MTK wifi AP config
+TAR_CMD=$(HOST_TAR) -C $(1)/ $(TAR_OPTIONS)
+
+define KernelPackage/mt_wifi
+  CATEGORY:=Kernel modules
+  TITLE:=MTK wifi AP driver
   DEPENDS:=@TARGET_ramips +wireless-tools
   CONFLICTS:=kmod-mt7615d_dbdc
   SUBMENU:=Wireless
 endef
 
-define Package/mt_wifi/config
+define KernelPackage/mt_wifi/config
 	source "$(SOURCE)/config.in"
 endef
 
-define Package/mt_wifi/description
+define KernelPackage/mt_wifi/description
   MT_WiFi auto config for mt7603/mt7612/mt7615 chips
 endef
 
 define Build/Compile
 endef
 
-define Package/mt_wifi/install
+define KernelPackage/mt_wifi/install
 	$(INSTALL_DIR) $(1)/etc/init.d/
 	$(INSTALL_DIR) $(1)/lib/wifi/
 	$(INSTALL_DIR) $(1)/etc/wireless/mt7615/
@@ -66,7 +69,7 @@ endif
 	$(INSTALL_BIN) ./files/SingleSKU_BF.dat $(1)/etc_ro/Wireless/RT2860AP/
 	$(INSTALL_BIN) ./files/mt7615.lua $(1)/lib/wifi
 	$(INSTALL_BIN) ./files/firmware.sh $(1)/etc/init.d/
-	$(INSTALL_BIN) ./files/91_load_wifi.sh $(1)/lib/preinit/
+	$(INSTALL_BIN) ./files/82_load_wifi.sh $(1)/lib/preinit/
 endef
 
-$(eval $(call BuildPackage,mt_wifi))
+$(eval $(call KernelPackage,mt_wifi))
