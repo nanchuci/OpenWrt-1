@@ -1,9 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2006-2008 OpenWrt.org
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2006-2020 OpenWrt.org
 
 __package_mk:=1
 
@@ -18,6 +15,8 @@ PKG_USE_MIPS16 ?= 1
 PKG_IREMAP ?= 1
 
 MAKE_J:=$(if $(MAKE_JOBSERVER),$(MAKE_JOBSERVER) $(if $(filter 3.% 4.0 4.1,$(MAKE_VERSION)),-j))
+
+PKG_SOURCE_DATE_EPOCH:=$(if $(DUMP),,$(shell $(TOPDIR)/scripts/get_source_date_epoch.sh $(CURDIR)))
 
 ifeq ($(strip $(PKG_BUILD_PARALLEL)),0)
 PKG_JOBS?=-j1
